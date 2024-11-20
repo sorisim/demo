@@ -1,5 +1,5 @@
 select
-  ,number
+  number
   ,expiry
   ,code
   ,companyname
