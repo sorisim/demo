@@ -15,22 +15,17 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  check_number:
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
-
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
+      - uses: actions/checkout@v3
+      - name: Find SQL files with invalid number
+        id: find_files
         run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+          find sql -name 'sample_code' -print0 | xargs -0 grep -Hn 'number [^0-9]{13}' > invalid_numbers.txt
+      - name: Check if there are invalid files
+        if: steps.find_files.outputs.files_found == 'true'
+        run: |
+          if [ -s invalid_numbers.txt ]; then
+            echo "::error file=invalid_numbers.txt,line=1,col=1::SQL files with invalid number found. Check invalid_numbers.txt for details."
+          fi
