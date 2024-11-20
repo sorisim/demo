@@ -22,7 +22,7 @@ jobs:
       - name: Check SQL file
         run: |
           # SQLファイルのパスを指定
-          sql_file="sample_sql.sql"
+          sql_file="sample_code"
 
           # SQLファイルを読み込み、各行を処理
           while IFS= read -r line; do
