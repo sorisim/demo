@@ -31,7 +31,7 @@ jobs:
               number=${BASH_REMATCH[1]}
               # 桁数チェック
               if [[ ${#number} -ne 13 ]]; then
-                echo "Error: Number length is not 13 digits in line: $line"
+                echo "Error: Number の値は 13 桁である必要があります in line: $line"
                 exit 1
               fi
             fi
