@@ -1,0 +1,14 @@
+select
+  ,number
+  ,expiry
+  ,code
+  ,companyname
+  ,age
+  ,sex
+  ,address
+  ,phone
+from
+  list
+where
+  number <> '0987654321'
+;
