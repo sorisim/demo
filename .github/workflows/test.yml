@@ -15,17 +15,24 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  check_number:
+  check_number_length:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Find SQL files with invalid number
-        id: find_files
+      - name: Check SQL file
         run: |
-          find sql -name 'sample_code' -print0 | xargs -0 grep -Hn 'number [^0-9]{13}' > invalid_numbers.txt
-      - name: Check if there are invalid files
-        if: steps.find_files.outputs.files_found == 'true'
-        run: |
-          if [ -s invalid_numbers.txt ]; then
-            echo "::error file=invalid_numbers.txt,line=1,col=1::SQL files with invalid number found. Check invalid_numbers.txt for details."
-          fi
+          # SQLファイルのパスを指定
+          sql_file="sample_sql.sql"
+
+          # SQLファイルを読み込み、各行を処理
+          while IFS= read -r line; do
+            # numberカラムの値を抽出 
+            if [[ $line =~ number='([0-9]+)' ]]; then
+              number=${BASH_REMATCH[1]}
+              # 桁数チェック
+              if [[ ${#number} -ne 13 ]]; then
+                echo "Error: Number length is not 13 digits in line: $line"
+                exit 1
+              fi
+            fi
+          done < "$sql_file"
