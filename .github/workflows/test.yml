@@ -30,6 +30,7 @@ jobs:
             echo $line
             if [[ $line =~ number='([0-9]+)' ]]; then
               number=${BASH_REMATCH[1]}
+              echo "hit"
               # 桁数チェック
               if [[ ${#number} -ne 13 ]]; then
                 echo "Error: Number の値は 13 桁である必要があります in line: $line"
