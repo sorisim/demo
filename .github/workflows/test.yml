@@ -28,7 +28,7 @@ jobs:
           while IFS= read -r line; do
             # numberカラムの値を抽出 
             echo $line
-            if [[ $line =~ number='([0-9]+)' ]]; then
+            if: $line =~ number='([0-9]+)'
               number=${BASH_REMATCH[1]}
               echo "hit"
               # 桁数チェック
