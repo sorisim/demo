@@ -1,0 +1,13 @@
+select
+  number
+  ,expiry
+  ,code
+  ,age
+  ,sex
+  ,address
+  ,phone
+from
+  list
+where
+  number='0987654321123'
+;
