@@ -2,7 +2,6 @@ select
   number
   ,expiry
   ,code
-  ,companyname
   ,age
   ,sex
   ,address
@@ -10,5 +9,5 @@ select
 from
   list
 where
-  number='0987654321'
+  number='0987654321123'
 ;
